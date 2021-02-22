@@ -1,0 +1,65 @@
+grupo: Felipe Ferreira Barbosa e Francisco Della Giustina Cavasan
+
+create table professor (codprofessor int not null, sexo char not null, nome varchar(100) not null, idade date not null, codescola int not null , constraint pk_professor primary key (codprofessor),  constraint fk_codescola foreign key (codescola) references escola)
+
+					   
+create table curso (codcurso int not null, nome varchar(100), constraint pk_curso primary key (codcurso))
+
+CREATE TABLE aluno (codaluno INT NOT NULL, nome VARCHAR(100) NOT NULL,
+					dat_nacs DATE NOT NULL, sexo VARCHAR(2),
+				   CONSTRAINT pk_aluno PRIMARY KEY (codaluno))
+
+CREATE TABLE turma (codturma INT NOT NULL, numprovas INT NOT
+					NULL, ano INT NOT NULL, descricao VARCHAR(70), numero_alunos INT NOT NULL,
+					CONSTRAINT pk_turma PRIMARY KEY(codturma))
+					
+create table turma_prof_disc( codprofessor int not null, codturma int not null, coddisciplina int not null,
+							constraint fk_codprofessor foreign key (codprofessor) references professor ,
+							 constraint fk_codturma foreign key (codturma) references turma,
+							 constraint fk_coddisciplina foreign key (coddisciplina) references disciplina(coddisciplina)) 
+
+create table disciplina (coddisciplina int not null, nome varchar(100) not null,
+						constraint pk_coddisciplina primary key (coddisciplina))
+
+CREATE TABLE prova (codprova int not null , codaluno INT NOT NULL, codturma INT NOT NULL, coddisciplina INT NOT NULL, 
+					descricao VARCHAR(100), dataavalicao DATE NOT NULL, notaprova DECIMAL(11,3),
+					constraint pk_codprova primary key (codprova),
+				   CONSTRAINT fk_codaluno FOREIGN KEY (codaluno) REFERENCES aluno, CONSTRAINT fk_codturma FOREIGN KEY (codturma) REFERENCES turma,
+				   CONSTRAINT fk_coddisciplina FOREIGN KEY (coddisciplina) REFERENCES disciplina)
+				 
+CREATE TABLE frequencia (codturma INT NOT NULL, codaluno INT NOT NULL, coddisciplina INT NOT NULL, datafreq DATE, 
+						CONSTRAINT pk_datafreq PRIMARY KEY (datafreq), 
+						CONSTRAINT fk_codturma FOREIGN KEY (codturma) REFERENCES turma, 
+						CONSTRAINT fk_codaluno FOREIGN KEY (codaluno) REFERENCES aluno, 
+						CONSTRAINT fk_coddisciplina FOREIGN KEY (coddisciplina)REFERENCES disciplina)
+						
+CREATE TABLE turma_aluno (dt_matricula DATE, codturma INT NOT NULL, codaluno INT NOT NULL,
+ CONSTRAINT fk_codturma FOREIGN KEY (codturma) REFERENCES turma, 
+ CONSTRAINT fk_codaluno FOREIGN KEY (codaluno) REFERENCES aluno)
+
+CREATE TABLE laboratorio (codlaboratorio INT NOT NULL, codturma INT NOT NULL, codprofessor INT NOT NULL,
+						 CONSTRAINT pk_laboratorio PRIMARY KEY (codlaboratorio), 
+						 CONSTRAINT fk_turma FOREIGN KEY (codturma) REFERENCES turma,
+						 CONSTRAINT fk_professor FOREIGN KEY (codprofessor) REFERENCES professor)
+
+
+
+CREATE TABLE escola (codescola INT NOT NULL, nome VARCHAR(45) NOT NULL, endereco VARCHAR(45) NOT NULL,
+					CONSTRAINT pk_escola PRIMARY KEY (codescola))
+					
+					
+ CREATE TABLE matricula (codmatricula INT NOT NULL, codaluno INT NOT NULL, codcurso INT NOT NULL,
+					   CONSTRAINT pk_matricula PRIMARY KEY (codmatricula),
+					   CONSTRAINT fk_codaluno FOREIGN KEY (codaluno) REFERENCES aluno,
+					   CONSTRAINT fk_codcurso FOREIGN KEY (codcurso) REFERENCES curso)
+				
+
+create table turma_prod_disc(codprofessor int not null, codturma int not null, coddisciplina int not null, 
+							 constraint fk_codprofessor foreign key (codprofessor) references professor,
+							 constraint fk_codturma foreign key (codturma) references turma,
+							 constraint fk_coddisciplina foreign key (coddisciplina) references disciplina)
+							 
+ 
+ 
+						 
+						 
